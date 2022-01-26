@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     private void Start()
     {
@@ -17,12 +17,11 @@ public class bullet : MonoBehaviour
     {
         Debug.Log("megutotte");
         GameObject effect = Instantiate(hiteffect, transform.position, Quaternion.identity);
-       if (collision.gameObject.CompareTag("enemy")) {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
             Destroy(effect, 2f);
             Destroy(gameObject);
-       
-
         }
-       
+
     }
 }

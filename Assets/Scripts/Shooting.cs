@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shooting : MonoBehaviour
+public class Shooting : MonoBehaviour
 {
     public Transform firepoint;
     public GameObject bulletprefab;
@@ -13,12 +13,12 @@ public class shooting : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    
 
-        
-        {
-            Shoot();
-        }
+
+
+    {
+        Shoot();
+    }
     void Shoot()
     {
         if (Time.time > nextfire)
@@ -26,15 +26,7 @@ public class shooting : MonoBehaviour
             nextfire = Time.time + cooldown;
             GameObject bullet = Instantiate(bulletprefab, firepoint.position, firepoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(firepoint.up * bulletforce, ForceMode2D.Impulse);
-        }
-
-        {
-            
+            rb.AddForce(firepoint.right * bulletforce, ForceMode2D.Impulse);
         }
     }
-
-
-
-
 }
