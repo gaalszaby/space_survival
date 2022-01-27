@@ -15,11 +15,11 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("megutotte");
-        GameObject effect = Instantiate(hiteffect, transform.position, Quaternion.identity);
+        // Debug.Log("megutotte");
+        // GameObject effect = Instantiate(hiteffect, transform.position, Quaternion.identity);
         if (collision.gameObject.CompareTag("enemy"))
         {
-            Destroy(effect, 2f);
+            // Destroy(effect, 2f);
             Destroy(gameObject);
         }
 
