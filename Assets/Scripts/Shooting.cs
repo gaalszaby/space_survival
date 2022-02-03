@@ -13,12 +13,10 @@ public class Shooting : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-
-
-
     {
         Shoot();
     }
+
     void Shoot()
     {
         if (Time.time > nextfire)

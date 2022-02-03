@@ -4,30 +4,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed;
+    [SerializeField] private float speed;
     private Rigidbody2D enemyRb;
     private GameObject player;
-    private Vector2 movement;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         enemyRb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 direction = (player.transform.position - transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        enemyRb.rotation = angle;
-        movement = direction;
-    }
-
     private void FixedUpdate()
     {
-        moveCharacter(movement);
+        MoveToPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,8 +27,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void moveCharacter(Vector2 direction)
+    public void MoveToPlayer()
     {
+        Vector2 direction = (player.transform.position - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        enemyRb.rotation = angle;
         enemyRb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
     }
 }

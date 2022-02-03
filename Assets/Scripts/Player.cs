@@ -3,28 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     public int maxHealth = 100;
-    public int currentHealth;
-    public Text health;
-    public Text gameOver;
+    public static int currentHealth;
+
+    float _hitTime = 1;
+    float _hitTimer = 0;
+    bool _canHit = true;
 
     Vector2 movement;
 
-    private void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
-        gameOver.enabled = false;
     }
 
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        health.text = currentHealth.ToString();
+
+        // Hit timer hogy ne framenként kapj damaget, csak bizonyos idõközönként
+        _hitTimer += Time.deltaTime;
+
+        if (_hitTimer > _hitTime)
+        {
+            _canHit = true;
+        } else
+        {
+            _canHit = false;
+        }
+
     }
 
     private void FixedUpdate()
@@ -37,23 +49,26 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.CompareTag("enemy"))
         {
             Destroy(collision.gameObject);
-            TakeDamage(20);
-            if (currentHealth == 0)
-            {
-                gameOver.enabled = true;
-            }
+            TakeDamage(10);
         }
     }
 
     private void TakeDamage(int damage)
     {
+        if (!_canHit)
+        {
+            return;
+        }
+
         if (currentHealth > 0)
         {
             currentHealth -= damage;
-        } else
+        }
+
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
         }
-
+        _hitTimer = 0;
     }
 }
